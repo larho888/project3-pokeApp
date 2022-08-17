@@ -1,6 +1,9 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Image from './Image';
+import Form from './Form';
+import title from './title.png';
 
 function App() {
 
@@ -25,7 +28,6 @@ function App() {
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(userChoice)
     setNum(randomNumber(252));
     setUserChoice('');
     if (pokemon.name === userChoice) {
@@ -35,37 +37,28 @@ function App() {
 
   const url = `https://pokeapi.co/api/v2/pokemon/${num}`;
 
-useEffect(() => {
-  axios({
-    url: `${url}`,
-    method: "GET",
-    dataResponse: "json",
-    params: {
-      format: "json",
-    },
-  }).then((response) => {
-    setPokemon({ 
-      name: response.data.name, 
-      img: response.data.sprites.front_default })
-});
-}, [num]);
+  useEffect(() => {
+    axios({
+      url: `${url}`,
+      method: "GET",
+      dataResponse: "json",
+      params: {
+        format: "json",
+      },
+    }).then((response) => {
+      setPokemon({ 
+        name: response.data.name, 
+        img: response.data.sprites.front_default })
+  });
+  }, [num]);
 
   return (
     <div className="App">
-      <div className="pokemonImg">
-        <h1>{pokemon.name}</h1>
-        <img src={pokemon.img} alt="" />
-        <form>
-          <input type="text" onChange={(e) => {
-            setUserChoice(e.target.value.toLowerCase());
-          }} value={userChoice} />
-          <button onClick={handleClick} >Guess!</button>
-        </form>
-        <div>
-          <p>Total Score: {counter}</p>
-        </div>
+      <div className='wrapper'>
+        <img src={title}></img>
+        <Image pokemon={pokemon} />
+        <Form setUserChoice={setUserChoice} userChoice={userChoice} handleClick={handleClick} counter={counter} />
       </div>
-
     </div>
   );
 }
