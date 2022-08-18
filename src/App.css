@@ -1,6 +1,11 @@
-.App {
+* {
+  margin: 0;
+  border: 0;
+}
+
+main {
   background-image: url(/asset/background.jpg);
-  height: 100vh;
+  min-height: 100vh;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -16,7 +21,7 @@
   align-items: center;
 }
 
-form {
+form, .name {
   display: flex;
   justify-content: center;
 }
@@ -37,20 +42,43 @@ button {
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 2% 0;
 }
 
 .score p {
   font-size: 6rem;
   font-weight: bold;
-  color: orange;
+  color: yellow;
 }
 
 .scoreImg {
   width: 30%;
-  margin-right: 5%;
+  margin-right: 2%;
 }
 
 .score img {
-  width: 100%;
+  width: 50%;
   height: 100%;
 }
+
+.highScore {
+  text-align: center;
+}
+
+.highScore h2 {
+  color: yellowgreen;
+  font-size: 2.5rem;
+  margin: 3%;
+}
+
+.leaderBoard h3 {
+  font-size: 2rem;
+  color: orangered;
+  margin: 3%;
+}
+
+footer {
+  background-color: greenyellow;
+  text-align: center;
+}
+

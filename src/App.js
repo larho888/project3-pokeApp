@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from './Image';
 import Form from './Form';
-import title from './title.png';
 import { db } from './Firebase-config';
 import { collection, getDocs, addDoc, query, orderBy, limit } from "firebase/firestore";
 
@@ -75,25 +74,31 @@ function App() {
   
 
   return (
-    <div className="App">
+    <>
+    <main>
       <div className='wrapper'>
-        <img src={title}></img>
         <Image pokemon={pokemon} />
         <Form setUserChoice={setUserChoice} userChoice={userChoice} handleClick={handleClick} counter={counter} />
         <div className="name">
           <input type="text" placeholder='Enter Name' onChange={(e) => {setNewName(e.target.value)} } />
           <button onClick={createUser}>Submit</button>
+        </div>
+        <div className='highScore'>
+          <h2>Leaderboard</h2>
           {users.map((user) => {
           return(
-            <div>
-              <h1>Name: {user.name} Score: {user.score}</h1>
+            <div className='leaderBoard'>
+              <h3>Name: {user.name} Score: {user.score}</h3>
             </div>
             )
           })}
         </div>
       </div>
-      
-    </div>
+    </main>
+    <footer>
+        <p>Created at Juno College</p>
+    </footer>
+    </>
   );
 }
 
