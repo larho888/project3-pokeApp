@@ -4,6 +4,8 @@ import axios from 'axios';
 import Image from './Image';
 import Form from './Form';
 import title from './title.png';
+import { db } from './Firebase-config';
+import { collection, getDocs, addDoc, query, orderBy, limit } from "firebase/firestore";
 
 function App() {
 
@@ -12,12 +14,29 @@ function App() {
     img: "",
   });
 
+  const [newName, setNewName] = useState('');
   const [num, setNum] = useState(123);
-
   const [userChoice, setUserChoice] = useState('');
-
   const [counter, setCounter] = useState(0);
+  const [users, setUsers] = useState([]);
+  const usersCollectionRef = collection(db, "users");
 
+  const highScore = query(usersCollectionRef, orderBy("score", "desc"), limit(3));
+
+  const createUser = async () => {
+    await addDoc(usersCollectionRef, {name: newName, score: counter});
+  }
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(highScore);
+      setUsers(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    };
+    getUsers()
+  }, [createUser]);
+
+
+  // to randomly select a pokemon id
   const randomNumber = (num) => {
     return Math.floor(Math.random() * num);
   }
@@ -26,6 +45,7 @@ function App() {
     setNum(randomNumber(252));
   }, []);
 
+  // onclick run the randomizer again, clear input and +1 to counter if input is correct
   const handleClick = (e) => {
     e.preventDefault();
     setNum(randomNumber(252));
@@ -52,15 +72,30 @@ function App() {
   });
   }, [num]);
 
+  
+
   return (
     <div className="App">
       <div className='wrapper'>
         <img src={title}></img>
         <Image pokemon={pokemon} />
         <Form setUserChoice={setUserChoice} userChoice={userChoice} handleClick={handleClick} counter={counter} />
+        <div className="name">
+          <input type="text" placeholder='Enter Name' onChange={(e) => {setNewName(e.target.value)} } />
+          <button onClick={createUser}>Submit</button>
+          {users.map((user) => {
+          return(
+            <div>
+              <h1>Name: {user.name} Score: {user.score}</h1>
+            </div>
+            )
+          })}
+        </div>
       </div>
+      
     </div>
   );
 }
 
 export default App;
+
