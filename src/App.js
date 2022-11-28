@@ -88,7 +88,12 @@ function App() {
           {users.map((user) => {
           return(
             <div className='leaderBoard'>
-              <h3>Name: {user.name} Score: {user.score}</h3>
+              <div className='username'>
+                <h3> Name: {user.name}</h3>
+              </div>
+              <div className='score'>
+                <h3>Score: {user.score}</h3>
+              </div>
             </div>
             )
           })}
