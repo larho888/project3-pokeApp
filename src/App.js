@@ -79,11 +79,11 @@ function App() {
       <div className='wrapper'>
         <Image pokemon={pokemon} />
         <Form setUserChoice={setUserChoice} userChoice={userChoice} handleClick={handleClick} counter={counter} />
-        <div className="name">
+        {/* <div className="name">
           <input type="text" placeholder='Enter Name' onChange={(e) => {setNewName(e.target.value)} } />
           <button onClick={createUser}>Submit</button>
-        </div> 
-        <div className='highScore'>
+        </div>  */}
+        {/* <div className='highScore'>
           <h2>Leaderboard</h2>
           {users.map((user) => {
           return(
@@ -98,7 +98,7 @@ function App() {
             </div>
             )
           })}
-        </div>
+        </div> */}
       </div>
     </main>
     <footer>
